@@ -44,8 +44,8 @@ jobs:
     if: >
       github.event.issue.pull_request &&
       contains(github.event.comment.body, '/approve-pipeline-run') &&
-      needs.pr-details.outputs.is_fork != 'true'
-    runs-on: ubuntu-24.042
+      needs.pr-details.outputs.is_fork == 'true'
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check commenter permissions
@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: ${{ needs.pr-details.outputs.fork_owner }}/${{ needs.pr-details.outputs.fork_repo }}
-          ref: ${{ needs.pr-details.outputs.branch }}
+          ref: ${{ needs.pr-details.outputs.sha }}
           fetch-depth: 0
 
       - name: Create and push branch
