@@ -41,6 +41,7 @@ jobs:
             core.setOutput('body', pr.data.body);
 
   approve-pipeline-run:
+    needs: pr-details
     if: >
       github.event.issue.pull_request &&
       contains(github.event.comment.body, '/approve-pipeline-run') &&
